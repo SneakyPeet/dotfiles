@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     nginx
+     html
+     ;smex
      csv
      clojure
      evil-cleverparens
@@ -65,13 +68,15 @@ values."
              ranger-cleanup-eagerly t
              ranger-cleanup-on-disable t
              ranger-ignored-extensions '("mkv" "flv" "iso" "mp4" "DS_Store"))
+
+     multiple-cursors
      ;; themes-megapack
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(zoom)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -329,12 +334,24 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; Global
-  (golden-ratio-mode 1)
-  (eval-after-load "golden-ratio"
-    '(add-to-list 'golden-ratio-exclude-modes "ranger-mode"))
+
+  ; GOLDEN RATIO
+  ;(golden-ratio-mode 1)
+  ;(eval-after-load "golden-ratio"
+  ;  '(add-to-list 'golden-ratio-exclude-modes "ranger-mode"))
+
+  ; REPLACE GOLDEN RATION
+  (require 'zoom)
+  (with-eval-after-load 'zoom
+    (setq zoom-size '(0.618 . 0.618))
+    (spacemacs/set-leader-keys "tg" 'zoom-mode))
+  (zoom-mode t)
+
   (setq powerline-default-separator 'arrow)
  ; (eval-after-load (zone-when-idle 60))
   ; (nyan-animate-nyancat nil)
+  ;; AG
+  (add-to-list 'exec-path "/usr/local/bin/")
  ;; Clojure
   (spacemacs/toggle-evil-cleverparens-on)
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
@@ -386,6 +403,8 @@ you should place your code here."
     (sneakypeet-auto-save-buffer-command))
   (defadvice windmove-right (before other-window-now activate)
     (sneakypeet-auto-save-buffer-command))
+
+  (global-evil-mc-mode  1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -398,7 +417,7 @@ you should place your code here."
  '(magit-diff-arguments (quote ("--no-ext-diff" "--stat")))
  '(package-selected-packages
    (quote
-    (spotify helm-spotify-plus multi psci treepy graphql sesman ranger hardcore-mode evil-cleverparens purescript-mode psc-ide org-projectile org-plus-contrib yaml-mode xterm-color web-mode web-beautify vmd-mode unfill tagedit smeargle slim-mode shell-pop scss-mode sass-mode reveal-in-osx-finder rainbow-mode rainbow-identifiers pug-mode pbcopy osx-trash osx-dictionary orgit org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd launchctl json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl csv-mode company-web web-completion-data company-tern dash-functional tern company-statistics company color-identifiers-mode coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu highlight elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed ace-link ace-jump-helm-line helm helm-core popup which-key undo-tree hydra evil-unimpaired f s dash async aggressive-indent adaptive-wrap ace-window avy))))
+    (lv parseedn parseclj a transient nginx-mode smex zoom spotify helm-spotify-plus multi psci treepy graphql sesman ranger hardcore-mode evil-cleverparens purescript-mode psc-ide org-projectile org-plus-contrib yaml-mode xterm-color web-mode web-beautify vmd-mode unfill tagedit smeargle slim-mode shell-pop scss-mode sass-mode reveal-in-osx-finder rainbow-mode rainbow-identifiers pug-mode pbcopy osx-trash osx-dictionary orgit org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow livid-mode skewer-mode simple-httpd launchctl json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl csv-mode company-web web-completion-data company-tern dash-functional tern company-statistics company color-identifiers-mode coffee-mode clojure-snippets clj-refactor inflections edn multiple-cursors paredit peg cider-eval-sexp-fu cider queue clojure-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu highlight elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed ace-link ace-jump-helm-line helm helm-core popup which-key undo-tree hydra evil-unimpaired f s dash async aggressive-indent adaptive-wrap ace-window avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
