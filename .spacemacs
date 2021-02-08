@@ -76,7 +76,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(zoom)
+   dotspacemacs-additional-packages '(zoom flycheck-clj-kondo)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -356,6 +356,12 @@ you should place your code here."
   (spacemacs/toggle-evil-cleverparens-on)
   (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
   (setq evil-lisp-state-enter-lisp-state-on-command nil)
+
+  (use-package clojure-mode
+    :ensure t
+    :config
+    (require 'flycheck-clj-kondo))
+
   ;; Javascript
   (setq-default
    ;; js2-mode
