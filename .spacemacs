@@ -76,9 +76,11 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(zoom flycheck-clj-kondo)
+   dotspacemacs-additional-packages '(zoom flycheck-clj-kondo (evil-magit :location (recipe
+                                                                                     :fetcher github
+                                                                                     :repo "emacs-evil/evil-magit")))
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '()
+   dotspacemacs-frozen-packages '(evil-magit)
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -420,6 +422,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(magit-diff-arguments (quote ("--no-ext-diff" "--stat")))
  '(package-selected-packages
    (quote
