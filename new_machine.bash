@@ -76,3 +76,6 @@ brew install leiningen
 brew install borkdude/brew/clj-kondo
 
 # todo  babashka
+
+# node:nvm
+# https://github.com/nvm-sh/nvm#install--update-script
