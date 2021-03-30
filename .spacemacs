@@ -31,56 +31,133 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     nginx
-     html
-     ;smex
-     csv
-     clojure
-     evil-cleverparens
-     yaml
-     javascript
-     react
-     spotify
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     helm
-     auto-completion
+     ;; Enable asciidoc layer for editing asciidoc content
+     ;; Useful for docs.cider.mx editing
+     asciidoc
+
+     ;; Add tool tips to show doc string of functions
+     ;; Show snippets in the auto-completion popup
+     ;; Show suggestions by most commonly used
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-sort-by-usage t)
+
+
      better-defaults
-     emacs-lisp
-     git
-     (markdown :variables markdown-live-preview-engine 'vmd)
-     org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     version-control
+
+     ;; https://develop.spacemacs.org/layers/+lang/clojure/README.html
+     (clojure :variables
+              clojure-backend 'cider
+              clojure-enable-linters 'clj-kondo
+              clojure-toplevel-inside-comment-form t
+              cider-overlays-use-font-lock t
+              cider-repl-buffer-size-limit 100
+              clojure-enable-clj-refactor t)
+
      (colors :variables
-             colors-enable-nyan-cat-progress-bar t)
+             colors-enable-nyan-cat-progress-bar (display-graphic-p)) ;t
+
+     ;; SPC a L displays key and command history in a separate buffer
+     command-log
+
+
+     ;; Tools to work with comma separate values
+     ;; Used for data science files
+     ;; https://develop.spacemacs.org/layers/+lang/csv/README.html
+     csv
+
+     ;; For Spacemacs configuration files and packages
+     emacs-lisp
+
+     ;; Include emojis into everything
+     emoji
+
+     ;; SPC g s opens Magit git client full screen (q restores previous layout)
+     ;; refine hunk 'all highlights characters changed on each line
+     (git :variables
+          git-magit-status-fullscreen t
+          magit-diff-refine-hunk 'all)
+
+
+     ;; graphviz - open-source graph declaration system
+     ;; Used to generated graphs of Clojure project dependencies
+     ;; https://develop.spacemacs.org/layers/+lang/graphviz/README.html
+     graphviz
+
+     ;; helm-follow-mode sticky - remembers use of C-c C-f
+     ;; - follow mode previews when scrolling through a helm list
+     ;; (setq helm-follow-mode-persistent t)
+     ;;(helm :variables helm-follow-mode-persistent t)
+     helm
+
+     html
+
+     json
+
+     javascript
+
+     (markdown :variables markdown-live-preview-engine 'vmd)
+
+     ;; Editing multiple lines of text concurrently
+     ;; `g r' menu in Emacs normal state
+     multiple-cursors
+
+     org
+
      osx
+
+     ;; Text-based file manager with preview
+     ;; SPC a r
      (ranger :variables
              ranger-show-preview t
              ranger-show-hidden t
-             ranger-cleanup-eagerly t
+             ;ranger-cleanup-eagerly t
              ranger-cleanup-on-disable t
-             ranger-ignored-extensions '("mkv" "flv" "iso" "mp4" "DS_Store"))
+             ranger-ignored-extensions '("mkv" "flv" "iso" "mp4"))
 
-     ;; multiple-cursors
-     ;; themes-megapack
+     react
+
+     ;; SPC ' runs eshell in a popup buffer
+     ;; To run your terminal shell, add
+     ;; shell-default-shell 'multi-term
+     (shell :variables
+            shell-default-shell 'eshell
+            shell-default-height 30
+            shell-default-position 'bottom)
+
+
+     ;; Spell as you type with Flyspell package,
+     ;; requires external command - ispell, hunspell, aspell
+     ;; SPC S menu, SPC S s to check current word
+     spell-checking
+
+     spotify
+
+     ;; Use original flycheck fringe bitmaps
+     (syntax-checking :variables
+                      syntax-checking-use-original-bitmaps t)
+
+     ;; Highlight changes in buffers
+     ;; SPC g . transient state for navigating changes
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t)
+
+     yaml
+
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(zoom flycheck-clj-kondo (evil-magit :location (recipe
-                                                                                     :fetcher github
-                                                                                     :repo "emacs-evil/evil-magit")))
+   dotspacemacs-additional-packages '(zoom
+                                      ;;(evil-magit :location (recipe :fetcher github :repo "emacs-evil/evil-magit"))
+                                      )
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '(evil-magit)
+   dotspacemacs-frozen-packages '(
+                                  ;evil-magit
+                                  )
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -150,10 +227,15 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn
-                         molokai
-                         spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(zenburn)
+   ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
+   ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
+   ;; first three are spaceline themes. `doom' is the doom-emacs mode-line.
+   ;; `vanilla' is default Emacs mode-line. `custom' is a user defined themes,
+   ;; refer to the DOCUMENTATION.org for more info on how to create your own
+   ;; spaceline theme. Value can be a symbol or list with additional properties.
+   ;; (default '(spacemacs :separator wave :separator-scale 1.5))
+   dotspacemacs-mode-line-theme '(spacemacs)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -337,10 +419,16 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   ;; Global
 
-  ; GOLDEN RATIO
-  ;(golden-ratio-mode 1)
-  ;(eval-after-load "golden-ratio"
-  ;  '(add-to-list 'golden-ratio-exclude-modes "ranger-mode"))
+  ;; Disable Bidirectional Parentheses Algorithm
+  (if (version<= "27.1" emacs-version)
+      (setq bidi-inhibit-bpa t))
+
+  ;; So long mode when Emacs thinks a file would affect performance
+  (if (version<= "27.1" emacs-version)
+      (global-so-long-mode 1))
+
+  ;; RANGER
+  (spacemacs/set-leader-keys "ar" 'ranger)
 
   ; REPLACE GOLDEN RATION
   (require 'zoom)
@@ -350,19 +438,69 @@ you should place your code here."
   (zoom-mode t)
 
   (setq powerline-default-separator 'arrow)
- ; (eval-after-load (zone-when-idle 60))
-  ; (nyan-animate-nyancat nil)
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Safe structural editing
+  ;; for all major modes
+  ;;(spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
+  ;; for clojure layer only (comment out line above)
+   (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hook-clojure-mode)
+  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Version Control configuration - Git, etc
+  ;;
+  ;; diff-hl - diff hightlights in right gutter as you type
+  (diff-hl-flydiff-mode)
+  ;;
+  ;; Load in magithub features after magit package has loaded
+  ;; (use-package magithub
+  ;;   :after magit
+  ;;   :config (magithub-feature-autoinject t))
+  ;;
+  ;; Use Spacemacs as the $EDITOR (or $GIT_EDITOR) for git commits messages
+  ;; when using git commit on the command line
+  ;(global-git-commit-mode t)
+  ;;
+  ;; Set locations of all your Git repositories
+  ;; with a number to define how many sub-directories to search
+  ;; `SPC g L' - list all Git repositories in the defined paths,
+  (setq magit-repository-directories
+        '(("~/.emacs.d"  . 0)
+          ("~/Development/" . 3)))
+  ;;
+  ;; end of version control configuration
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
   ;; AG
   (add-to-list 'exec-path "/usr/local/bin/")
- ;; Clojure
-  (spacemacs/toggle-evil-cleverparens-on)
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
-  (setq evil-lisp-state-enter-lisp-state-on-command nil)
 
-  (use-package clojure-mode
-    :ensure t
-    :config
-    (require 'flycheck-clj-kondo))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Clojure configurations
+
+  ;; Pretty print in Clojure to use the Fast Idiomatic Pretty-Printer. This is approximately 5-10x faster than clojure.core/pprint
+  (setq cider-pprint-fn 'fipp)
+  ;; Indentation of function forms
+  ;; https://github.com/clojure-emacs/clojure-mode#indentation-of-function-forms
+  (setq clojure-indent-style 'align-arguments)
+  ;; Vertically align s-expressions
+  ;; https://github.com/clojure-emacs/clojure-mode#vertical-alignment
+  (setq clojure-align-forms-automatically t)
+  ;; Auto-indent code automatically
+  ;; https://emacsredux.com/blog/2016/02/07/auto-indent-your-code-with-aggressive-indent-mode/
+  ;(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+
+  (setq cljr-inject-dependencies-at-jack-in nil)
+
+  ;(spacemacs/toggle-evil-cleverparens-on)
+  ;(add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
+
+  ;; end of clojure
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (setq evil-lisp-state-enter-lisp-state-on-command nil)
 
   ;; Javascript
   (setq-default
@@ -377,9 +515,6 @@ you should place your code here."
    web-mode-attr-indent-offset 2
    )
 
-  ;; (setq neo-theme (if (display-graphic-p) 'icons 'nerd))
-  (setq cljr-inject-dependencies-at-jack-in nil)
-  ;; (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
 
   (defun sneakypeet-use-eslint-from-node-modules ()
     (let* ((root (locate-dominating-file
@@ -392,6 +527,8 @@ you should place your code here."
         (setq-local flycheck-javascript-eslint-executable eslint))))
 
   (add-hook 'flycheck-mode-hook #'sneakypeet-use-eslint-from-node-modules)
+
+
 
   (defun sneakypeet-auto-save-buffer-command ()
     (when (and buffer-file-name
@@ -412,7 +549,130 @@ you should place your code here."
   (defadvice windmove-right (before other-window-now activate)
     (sneakypeet-auto-save-buffer-command))
 
-  (global-evil-mc-mode  1)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Eshell visual enhancements
+  ;;
+  ;; Add git status visual labels
+  ;;
+  (require 'dash)
+  (require 's)
+  ;;
+  (defmacro with-face (STR &rest PROPS)
+    "Return STR propertized with PROPS."
+    `(propertize ,STR 'face (list ,@PROPS)))
+  ;;
+  (defmacro esh-section (NAME ICON FORM &rest PROPS)
+    "Build eshell section NAME with ICON prepended to evaled FORM with PROPS."
+    `(setq ,NAME
+           (lambda () (when ,FORM
+                        (-> ,ICON
+                            (concat esh-section-delim ,FORM)
+                            (with-face ,@PROPS))))))
+  ;;
+  (defun esh-acc (acc x)
+    "Accumulator for evaluating and concatenating esh-sections."
+    (--if-let (funcall x)
+        (if (s-blank? acc)
+            it
+          (concat acc esh-sep it))
+      acc))
+  ;;
+  (defun esh-prompt-func ()
+    "Build `eshell-prompt-function'"
+    (concat esh-header
+            (-reduce-from 'esh-acc "" eshell-funcs)
+            "\n"
+            eshell-prompt-string))
+  ;;
+  ;;
+  ;; Looking for unicode icons on Emacs
+  ;; `list-character-sets' and select unicode-bmp
+  ;; scroll through bitmaps list to find the one you want
+  ;; some bitmaps seem to change
+  ;;
+  ;; "\x26A5 "  (female-male symbol)
+  ;; "\xf394"   (non-binary)
+  ;; "\xf105"     (docker - changes)
+  ;; "\xf105"   (leiningen - changes)
+  ;; "\xe919"   (clojure logo - ??)
+  ;; "\xf104"   (clojurescript logo - changes)
+  ;; "\xf09b"   (github octocat)
+  ;; "\xf397"  (git branch)
+  ;; "\xf126"    (was git fork, changes..)
+  ;; "\xf1d3"  ;  (git icon - changes)
+  ;; "\xf5b0"   (git merge)
+  ;; "\xf07b" 
+  ;; "\xf114"   (closed folder - changes)
+  ;; "\xf115"   (open folder - changes)
+  ;; "\xf074" 
+  ;; "\xe97c" 
+  ;; "\xe943"  
+  ;; "\xe566"  
+  ;; "\xe422"  
+  ;; "\xe907"  ; 
+  ;; "\xe91b"  ;  
+  ;; "\xf126"    (was git fork, changes..)
+  ;; "\xf1d3"  ;  (git icon - changes)
+  ;;
+  ;;
+  (esh-section esh-dir
+               "\xf07c"  ;  (faicon folder)
+               (abbreviate-file-name (eshell/pwd))
+               '(:foreground "olive" :bold bold :underline t))
+  ;;
+  (esh-section esh-git
+               "\xf397"  ;  (git branch icon)
+               (magit-get-current-branch)
+               '(:foreground "maroon"))
+  ;;
+  ;; (esh-section esh-python
+  ;;              "\xe928"  ;  (python icon)
+  ;;              pyvenv-virtual-env-name)
+  ;;
+  (esh-section esh-clock
+               ""  ;  (clock icon)
+               (format-time-string "%H:%M" (current-time))
+               '(:foreground "forest green"))
+  ;;
+  ;; Below I implement a "prompt number" section
+  (setq esh-prompt-num 0)
+  (add-hook 'eshell-exit-hook (lambda () (setq esh-prompt-num 0)))
+  (advice-add 'eshell-send-input :before
+              (lambda (&rest args) (setq esh-prompt-num (incf esh-prompt-num))))
+  ;;
+  ;;
+  ;; "\xf0c9"  ;  (list icon)
+  (esh-section esh-num
+               "\x2130"  ;  ℰ (eshell icon)
+               (number-to-string esh-prompt-num)
+               '(:foreground "brown"))
+  ;;
+  ;; Separator between esh-sections
+  (setq esh-sep " ")  ; or " | "
+  ;;
+  ;; Separator between an esh-section icon and form
+  (setq esh-section-delim "")
+  ;;
+  ;; Eshell prompt header
+  (setq esh-header "\n ")  ; or "\n┌─"
+  ;;
+  ;; Eshell prompt regexp and string. Unless you are varying the prompt by eg.
+  ;; your login, these can be the same.
+  (setq eshell-prompt-regexp " \x2130 ")   ; or "└─> "
+  (setq eshell-prompt-string " \x2130 ")   ; or "└─> "
+  ;;
+  ;; Choose which eshell-funcs to enable
+  ;; (setq eshell-funcs (list esh-dir esh-git esh-python esh-clock esh-num))
+  ;; (setq eshell-funcs (list esh-dir esh-git esh-clock esh-num))
+  (setq eshell-funcs (list esh-dir esh-git))
+
+  ;; Enable the new eshell prompt
+  (setq eshell-prompt-function 'esh-prompt-func)
+
+  ;; End of Eshell
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;;(global-evil-mc-mode  1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
