@@ -1,18 +1,19 @@
+# run git in terminal to triger devtools install
 
 # mac:show hidden files
 defaults write com.apple.Finder AppleShowAllFiles true
 
 killall Finder
 
-# mac:allows 3rd party installs to be enabled from system preference
-
-pctl --master-disable 
+# mac:roseta (M1 only)
+softwareupdate --install-rosetta
 
 [https://brew.sh/](https://brew.sh/)
 
 # brew
 
-/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# do the next steps
 
 brew update
 
@@ -38,10 +39,7 @@ ln -s /usr/local/opt/emacs-plus@27/Emacs.app /Applications
 
 # emacs:spacemacs
 
-# if you want fresh spacemacs 
-# git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-
-# if you want custom spacemacs
+git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 git init .
 git remote add origin git@github.com:SneakyPeet/dotfiles.git
 git pull origin master
@@ -79,3 +77,4 @@ brew install borkdude/brew/clj-kondo
 
 # node:nvm
 # https://github.com/nvm-sh/nvm#install--update-script
+# nvm install 8
