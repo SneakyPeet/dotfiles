@@ -1,9 +1,7 @@
 # run git in terminal to triger devtools install
 
 # mac:show hidden files
-defaults write com.apple.Finder AppleShowAllFiles true
-
-killall Finder
+defaults write com.apple.finder AppleShowAllFiles true; killall Finder
 
 # mac:roseta (M1 only)
 softwareupdate --install-rosetta
