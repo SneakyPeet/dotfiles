@@ -73,31 +73,18 @@ brew install borkdude/brew/clj-kondo
 
 # todo  babashka
 
-# ROSETTA
+# ROSETTA + NODE
 # https://osxdaily.com/2020/11/18/how-run-homebrew-x86-terminal-apple-silicon-mac/
 
 softwareupdate --install-rosetta --agree-to-license
 
-# ADD TO .zshrc
-# if [ "$(sysctl -n sysctl.proc_translated)" = "1" ]; then
-# local brew_path="/usr/local/homebrew/bin"
-# else
-#    local brew_path="/opt/homebrew/bin"
-# fi
-# export PATH="${brew_path}:${PATH}"
-
 
 # 1. Copy terminal, rename the copy, and set it to run in rosetta
 # 2. Open rosetta
-# 3. install homebrew
-# 4. add the above to your .zshrc
+# 3. install homebrew /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # 5. close all terminals
 # 6. re-open
+# mkdir ~/.nvm
 # 7. install nvm from homebrew
 # 8. nvm install v8
 # 9. nvm use v8
-
-
-# node:nvm
-# https://github.com/nvm-sh/nvm#install--update-script
-# nvm install 8
