@@ -475,6 +475,7 @@ you should place your code here."
 
   ;; AG
   (add-to-list 'exec-path "/usr/local/bin/")
+  (setq helm-ag-use-agignore 1)
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
