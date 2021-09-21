@@ -19,6 +19,8 @@ brew upgrade
 
 brew tap homebrew/cask
 
+brew doctor # if there are any issues
+
 # git:ssh-key
 # from home dir https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
@@ -31,9 +33,9 @@ pbcopy < ~/.ssh/id_ed25519.pub
 
 brew tap d12frosted/emacs-plus
 
-brew install emacs-plus
+brew install emacs-plus --with-no-titlebar --with-spacemacs-icon
 
-ln -s /usr/local/opt/emacs-plus@27/Emacs.app /Applications
+ln -s /opt/homebrew/opt/emacs-plus@27/Emacs.app /Applications
 
 # emacs:spacemacs
 
@@ -51,7 +53,8 @@ brew install the_silver_searcher
 brew install aspell
 
 brew tap homebrew/cask-fonts
-brew install —cask font-source-code-pro
+brew install svn
+brew install font-source-code-pro
 
 # clojure:java
 # using openjdk https://github.com/AdoptOpenJDK/homebrew-openjdk
@@ -71,12 +74,10 @@ brew install leiningen
 
 brew install borkdude/brew/clj-kondo
 
-# todo  babashka
+brew install borkdude/brew/babashka
 
 # ROSETTA + NODE
 # https://osxdaily.com/2020/11/18/how-run-homebrew-x86-terminal-apple-silicon-mac/
-
-softwareupdate --install-rosetta --agree-to-license
 
 
 # 1. Copy terminal, rename the copy, and set it to run in rosetta
@@ -86,5 +87,5 @@ softwareupdate --install-rosetta --agree-to-license
 # 6. re-open
 # mkdir ~/.nvm
 # 7. install nvm from homebrew
-# 8. nvm install v8
-# 9. nvm use v8
+# 8. nvm install v16
+# 9. nvm use v16
