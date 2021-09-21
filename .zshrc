@@ -13,7 +13,9 @@ fi
 export PATH="${brew_path}:${PATH}"
 
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/Homebrew/opt/nvm/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/pieterkoornhof/Development/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/pieterkoornhof/Development/google-cloud-sdk/path.zsh.inc'; fi
